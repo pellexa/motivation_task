@@ -29,59 +29,58 @@
         </style>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="../js/ip.js"></script>
         <script>
+            var client_ip = '';
+
+            getUserIP(function(ip){
+                client_ip = ip;
+            });
+
             function handleGet(button) {
                 var uri = button.value
                 $.ajax({
                     type: "GET",
                     url: '../' + uri + '/',
-                    success: function(html) {
-                        $(".item3").html(html);
+                    success: function(data) {
+                        $(".item3").html(data);
                     }
                 });
             }
 
             function handlePost(element) {
-//                 var data = $('#' + element.value).serialize()
-                var data = $('#' + element.value)
-                var uri = element
-                console.log(data)
-                alert(data)
-                
-//                 var uri = button.value
-//                 $.ajax({
-//                     type: "POST",
-//                     url: '../' + uri + '/',
-//                     data: data,
-//                     success: function(html) {
-//                         $(".item3").html(html);
-//                     }
-//                 });
+                var arr = $('#' + element.value).serializeArray()
+                var uri = arr[arr.length - 1].value
+                arr.push({name: "ip", value: client_ip})
+
+                $.ajax({
+                    type: "POST",
+                    url: '../' + uri + '/',
+                    data: arr,
+                    success: function(data) {
+                        $(".item3").html(data);
+                    }
+                });
             }
         </script>
-        
     </head>
-<body>
-    <div class="grid-container">
-        <div class="item1">Motivation task</div>
-        <div class="item2">
-            <button onclick="handleGet(this)" value="createtables">Create tables</button><br>
-            <button onclick="handleGet(this)" value="droptables">Drop tables</button><br>
-            <button onclick="handleGet(this)" value="students">Create student</button><br>
-            <button onclick="handleGet(this)" value="liststudents">List students</button><br>
-            <a href="../groups/">Create group</a><br>
-            <a href="../subjects/">Create subject</a><br>
-            <a href="../teachers/">Create teacher</a><br>
-            <a href="../semesters/">Create semester</a><br>
+    <body>
+        <div class="grid-container">
+            <div class="item1">Motivation task</div>
+            <div class="item2">
+                <button onclick="handleGet(this)" value="createtables">Create tables</button><br>
+                <button onclick="handleGet(this)" value="testdata">Create testdata</button><br>
+                <button onclick="handleGet(this)" value="droptables">Drop tables</button><br>
+                <button onclick="handleGet(this)" value="students">Create/update student</button><br>
+                <button onclick="handleGet(this)" value="liststudents">List students</button><br>
+                <button onclick="handleGet(this)" value="groups">Create groups</button><br>
+                <button onclick="handleGet(this)" value="subjects">Create subject</button><br>
+                <button onclick="handleGet(this)" value="teachers">Create teacher</button><br>
+                <button onclick="handleGet(this)" value="semesters">Create semester</button><br>
+            </div>
+            <div id="content" class="item3"></div>
+            <div class="item4">Filters</div>
+            <div class="item5">Footer</div>
         </div>
-        <div id="content" class="item3">
-<!--             <p> -->
-                <?php //echo $output; ?>
-<!--             </p> -->
-        </div>  
-        <div class="item4">Filters</div>
-        <div class="item5">Footer</div>
-    </div>
-
-</body>
+    </body>
 </html>

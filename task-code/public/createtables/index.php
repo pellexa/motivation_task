@@ -1,4 +1,11 @@
 <?php
 
-$output = "<h4>Create tables</h4>";
-echo $output;
+include '../../db_connect.php';
+include 'tables.php';
+
+if ($db = db_connect()) {
+    foreach ($tables as $table => $query) {
+        echo "<br>".$table." created.";
+        $db->exec($query);
+    }
+}
