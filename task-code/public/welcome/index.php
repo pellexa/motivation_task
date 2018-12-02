@@ -24,7 +24,7 @@
                 background-color: rgba(255, 255, 255, 0.8);
                 text-align: center;
                 padding: 20px 0;
-                font-size: 30px;
+                font-size: 20px;
             }
         </style>
 
@@ -38,12 +38,18 @@
             });
 
             function handleGet(button) {
+                var arr = {student_id: button.innerText}
                 var uri = button.value
+                var name = button.name
                 $.ajax({
                     type: "GET",
                     url: '../' + uri + '/',
+                    data: arr,
                     success: function(data) {
-                        $(".item3").html(data);
+                        $(name).html(data);
+                        if (button.innerText.match(/create|drop|get/i)) {
+                            $(".item5").html('');
+                        }
                     }
                 });
             }
@@ -68,19 +74,26 @@
         <div class="grid-container">
             <div class="item1">Motivation task</div>
             <div class="item2">
-                <button onclick="handleGet(this)" value="createtables">Create tables</button><br>
-                <button onclick="handleGet(this)" value="testdata">Create testdata</button><br>
-                <button onclick="handleGet(this)" value="droptables">Drop tables</button><br>
-                <button onclick="handleGet(this)" value="students">Create/update student</button><br>
-                <button onclick="handleGet(this)" value="liststudents">List students</button><br>
-                <button onclick="handleGet(this)" value="groups">Create groups</button><br>
-                <button onclick="handleGet(this)" value="subjects">Create subject</button><br>
-                <button onclick="handleGet(this)" value="teachers">Create teacher</button><br>
-                <button onclick="handleGet(this)" value="semesters">Create semester</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="createtables">Create tables</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="testdata">Create testdata</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="droptables">Drop tables</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="students">Create/update student</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="liststudents">List students</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="groups">Create groups</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="subjects">Create subject</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="teachers">Create teacher</button><br>
+                <button onclick="handleGet(this)" name=".item3" value="semesters">Create semester</button><br>
             </div>
             <div id="content" class="item3"></div>
-            <div class="item4">Filters</div>
-            <div class="item5">Footer</div>
+            <div class="item4">
+                <form id="top_student">
+                    <div>
+                        <input type="hidden" name="uri" value="liststudents">
+                        <button type="button" onclick="handlePost(this)" name=".item3" value="top_student">Get top students</button><br>
+                    </div>
+                </form>
+            </div>
+            <div class="item5"></div>
         </div>
     </body>
 </html>

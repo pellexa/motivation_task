@@ -52,8 +52,9 @@ $tables = [
                 id serial PRIMARY KEY,
                 student_id integer NOT NULL,
                 subject_id integer NOT NULL,
-                score smallserial DEFAULT 0,
-                UNIQUE(student_id, subject_id)
+                semester_id integer NOT NULL,
+                score smallint DEFAULT 0,
+                UNIQUE(student_id, subject_id, semester_id)
             );
         ",
     
