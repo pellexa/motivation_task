@@ -45,3 +45,5 @@ cd folderName
 docker-compose up
 ```
 http://localhost:82/welcome/
+
+File with queries: task-code/query.sql
